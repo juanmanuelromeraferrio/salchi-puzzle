@@ -209,31 +209,25 @@
             emptyIndex = 15;
         }
 
-        function isSolvable(array) {
-            const DIM = 4;
-
-            let inversionSum = 0;  // If this sum is even it is solvable
-            for (let i = 0; i < array.length; i++) {
-                // For empty square add row number to inversionSum                
-                if (array[i] === 0) {
-                    inversionSum += (Math.floor(i / DIM) + 1);  // Add Row number
-                    continue;
-                }
-
-                let count = 0;
-                for (let j = i + 1; j < array.length; j++) {
-                    // No need to count for empty square
-                    if (array[j] === 0) {
-                        continue;
-                    } else if (array[i] > array[j]) { // If any element greater 
-                        count++;                    // than seed, increase the
-                    }                               // inversionSum                    
-                }
-                inversionSum += count;
+        function isSolvable(puzzle) {
+    let inversiones = 0;
+    for (let i = 0; i < puzzle.length - 1; i++) {
+        for (let j = i + 1; j < puzzle.length; j++) {
+            if (puzzle[i] > puzzle[j]) {
+                inversiones++;
             }
+        }
+    }
 
-            // if inversionSum is even return true, otherwise false
-            return (inversionSum % 2 === 0);
+    // Determinar la fila del espacio vacío (siempre es la fila 1 desde abajo)
+    const filaVacia = 1;
+
+    // Sumar inversiones y fila del espacio vacío
+    const suma = inversiones + filaVacia;
+
+    // Verificar si la suma es par
+    return suma % 2 === 0;
+
         }
 
         // Función para barajar un array
